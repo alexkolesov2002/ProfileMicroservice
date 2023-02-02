@@ -38,7 +38,7 @@ public class PlatformsController : ControllerBase
         return NotFound();
     }
 
-    [HttpPost(Name = "CreatePlatform")]
+    [HttpPost]
     public ActionResult<PlatformReadDto> CreatePlatform(PlatformCreateDto input)
     {
         Console.WriteLine("Пошло получение платформы");
