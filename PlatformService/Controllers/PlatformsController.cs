@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PlatformService.Data;
 using PlatformService.Dtos;
 using PlatformService.Models;
+using PlatformService.SyncDataServices.Http;
 
 namespace PlatformService.Controllers;
 
@@ -12,11 +13,14 @@ public class PlatformsController : ControllerBase
 {
     private readonly IPlatformRepository _platformRepository;
     private readonly IMapper _mapper;
+    private readonly ICommandDataClient _commandDataClient;
 
-    public PlatformsController(IPlatformRepository platformRepository, IMapper mapper)
+    public PlatformsController(IPlatformRepository platformRepository, IMapper mapper,
+        ICommandDataClient commandDataClient)
     {
         _platformRepository = platformRepository;
         _mapper = mapper;
+        _commandDataClient = commandDataClient;
     }
 
     [HttpGet()]
@@ -39,7 +43,7 @@ public class PlatformsController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<PlatformReadDto> CreatePlatform(PlatformCreateDto input)
+    public async Task<ActionResult<PlatformReadDto>> CreatePlatform(PlatformCreateDto input)
     {
         Console.WriteLine("Пошло получение платформы");
         var platform = _mapper.Map<Platform>(input);
@@ -47,6 +51,15 @@ public class PlatformsController : ControllerBase
         _platformRepository.SaveChanges();
 
         var platformRead = _mapper.Map<PlatformReadDto>(platform);
-        return CreatedAtRoute(nameof(GetPlatformById), new { Id = platformRead.Id }, platformRead); 
+        try
+        {
+            await _commandDataClient.SendPlatformToCommand(platformRead);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+        }
+
+        return CreatedAtRoute(nameof(GetPlatformById), new { Id = platformRead.Id }, platformRead);
     }
 }
