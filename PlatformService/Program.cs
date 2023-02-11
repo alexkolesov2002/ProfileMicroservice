@@ -21,6 +21,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
+Console.WriteLine($"{app.Configuration["CommandService"]}");
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
