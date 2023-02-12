@@ -13,6 +13,7 @@ public static class PrepDb
 
     private static void SeedData(AppDbContext context)
     {
+        
         if (!context.Platforms.Any())
         {
             Console.WriteLine("Данных нет");

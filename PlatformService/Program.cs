@@ -11,8 +11,19 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseInMemoryDatabase("InMemory"));
+if (builder.Environment.IsDevelopment())
+{
+    Console.WriteLine("Запускаемся в разработке, база в памяти");
+    builder.Services.AddDbContext<AppDbContext>(options =>
+        options.UseInMemoryDatabase("InMemory"));
+}
+else
+{
+    Console.WriteLine("Запускаемся в разработке, база SQL server");
+    builder.Services.AddDbContext<AppDbContext>(options =>
+        options.UseSqlServer(builder.Configuration.GetConnectionString("PlatformsConn")));
+}
+
 
 builder.Services.AddHttpClient<ICommandDataClient, HttpCommandDataClient>();
 builder.Services.AddScoped<IPlatformRepository, PlatformRepository>();
