@@ -19,7 +19,7 @@ if (builder.Environment.IsDevelopment())
 }
 else
 {
-    Console.WriteLine("Запускаемся в разработке, база SQL server");
+    Console.WriteLine("Запускаемся в проде, база SQL server");
     builder.Services.AddDbContext<AppDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("PlatformsConn")));
 }
@@ -46,6 +46,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.PrepPopulation();
+app.PrepPopulation(app.Environment.IsProduction());
 
 app.Run();
