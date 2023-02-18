@@ -42,9 +42,10 @@ public class CommandRepository : ICommandRepository
             .OrderBy(x=>x.PlatformFk.Name);
     }
     
-    public Command GetCommand(int commandId)
+    public Command GetCommand(int platformId ,int commandId)
     {
-        return _appDbContext.Commands.FirstOrDefault(x => x.Id == commandId)!;
+        return _appDbContext.Commands.FirstOrDefault(x => x.Id == commandId 
+                                                          && x.PlatformId == platformId)!;
     }
 
     public void CreateCommand(int platformId, Command command)
