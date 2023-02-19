@@ -5,7 +5,7 @@ using RabbitMQ.Client;
 
 namespace PlatformService.AsyncDataServices;
 
-public class MessageBusClient : IMessageBusClient, IDisposable
+public class MessageBusClient : IMessageBusClient
 {
     private readonly IConfiguration _configuration;
     private readonly IConnection _connection;
@@ -53,8 +53,10 @@ public class MessageBusClient : IMessageBusClient, IDisposable
   
     public void Dispose()
     {
-        _connection.Dispose();
-        _channel.Dispose();
+        if (!_channel.IsOpen) return;
+        _connection.Close();
+        _channel.Close();
+
     }
     private void SendMessage(string messageJson)
     {
@@ -66,8 +68,6 @@ public class MessageBusClient : IMessageBusClient, IDisposable
    
     private void RabbitMQ_ConnectionShutDown(object? sender, ShutdownEventArgs e)
     {
-        /*_channel.Close();
-        _connection.Close();*/
         Console.WriteLine("RabbitMq connection shutdown");
     }
 }

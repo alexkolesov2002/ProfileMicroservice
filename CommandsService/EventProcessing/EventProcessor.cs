@@ -23,8 +23,9 @@ public class EventProcessor : IEventProcessor
 
         switch (eventType)
         {
-            case  EventType.PlatformPublished:
-                
+            case EventType.PlatformPublished:
+                AddPlatform(message);
+                Console.WriteLine($"Add to database new platform from platform service: {message}");
                 break;
             case EventType.Undetermined:
                 Console.WriteLine("Could not determine the event type");
@@ -60,8 +61,13 @@ public class EventProcessor : IEventProcessor
         try
         {
             var platform = _mapper.Map<Platform>(platformPublishedDto);
-            repository.CreatePlatform(platform);
-            repository.SaveChanges();
+            platform.Id = 0;
+            if (!repository.PlatformFromPlatformsServiceExits(platform.ExternalPlatformId))
+            {
+                repository.CreatePlatform(platform);
+                repository.SaveChanges();
+                Console.WriteLine("add new platform successful");
+            }
         }
         catch (Exception e)
         {

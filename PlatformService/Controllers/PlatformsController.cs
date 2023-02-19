@@ -56,12 +56,7 @@ public class PlatformsController : ControllerBase
         var platformRead = _mapper.Map<PlatformReadDto>(platform);
         try
         {
-            //await _commandDataClient.SendPlatformToCommand(platformRead);
-
-            var platformPublishedDto = _mapper.Map<PlatformPublishedDto>(platform);
-            platformPublishedDto.Event = "Platform_Published";
-            _messageBusClient.PublishNewPlatform(platformPublishedDto);
-            
+            await _commandDataClient.SendPlatformToCommand(platformRead);
         }
         catch (Exception e)
         {
