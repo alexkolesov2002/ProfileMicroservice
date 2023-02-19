@@ -1,4 +1,5 @@
 ﻿using CommandsService.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace CommandsService.Data;
 
@@ -43,7 +44,8 @@ public class CommandRepository : ICommandRepository
 
     public IEnumerable<Command> GetCommandsForPlatform(int platformId)
     {
-        return _appDbContext.Commands.Where(x => x.PlatformId.Equals(platformId))
+        return _appDbContext.Commands.Include(x=>x.PlatformFk)
+            .Where(x => x.PlatformId.Equals(platformId))
             .OrderBy(x=>x.PlatformFk.Name);
     }
     
