@@ -25,7 +25,7 @@ public class CommandsController : ControllerBase
         Console.WriteLine($" Пришедший из URL Id {platformId}");
         if (_commandRepository.PlatformExits(platformId))
         {
-            return Ok(_mapper.Map<CommandReadDto>(_commandRepository.GetCommandsForPlatform(platformId)));
+            return Ok(_mapper.Map<List<CommandReadDto>>(_commandRepository.GetCommandsForPlatform(platformId)));
         }
 
         return NotFound();
