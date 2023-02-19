@@ -1,9 +1,11 @@
-﻿using PlatformService.Dtos;
+﻿using System.Text;
+using System.Text.Json;
+using PlatformService.Dtos;
 using RabbitMQ.Client;
 
 namespace PlatformService.AsyncDataServices;
 
-public class MessageBusClient : IMessageBusClient
+public class MessageBusClient : IMessageBusClient, IDisposable
 {
     private readonly IConfiguration _configuration;
     private readonly IConnection _connection;
@@ -24,7 +26,6 @@ public class MessageBusClient : IMessageBusClient
             _channel = _connection.CreateModel();
             
             _channel.ExchangeDeclare(exchange: "trigger", type: ExchangeType.Fanout);
-
             _connection.ConnectionShutdown += RabbitMQ_ConnectionShutDown;
 
             Console.WriteLine("Connection to RabbitMq");
@@ -35,15 +36,38 @@ public class MessageBusClient : IMessageBusClient
         }
     }
 
-    private void RabbitMQ_ConnectionShutDown(object? sender, ShutdownEventArgs e)
-    {
-        Console.WriteLine("RabbitMq connection shutdown");
-    }
-
-
     public void PublishNewPlatform(PlatformPublishedDto platformPublishedDto)
     {
-        
+        var messageJson = JsonSerializer.Serialize(platformPublishedDto);
+
+        if (_connection.IsOpen)
+        {
+            Console.WriteLine("Sending Message to RabbitMq");
+            SendMessage(messageJson);
+        }
+        else
+        {
+            Console.WriteLine("RabbitMq connection closed");
+        }
     }
-    
+  
+    public void Dispose()
+    {
+        _connection.Dispose();
+        _channel.Dispose();
+    }
+    private void SendMessage(string messageJson)
+    {
+        var body = Encoding.UTF8.GetBytes(messageJson);
+        _channel.BasicPublish(exchange: "trigger", routingKey: "", basicProperties: null , body: body);
+        Console.WriteLine($"We sent message {messageJson}");
+    }
+
+   
+    private void RabbitMQ_ConnectionShutDown(object? sender, ShutdownEventArgs e)
+    {
+        /*_channel.Close();
+        _connection.Close();*/
+        Console.WriteLine("RabbitMq connection shutdown");
+    }
 }
