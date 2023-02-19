@@ -36,6 +36,11 @@ public class CommandRepository : ICommandRepository
         return _appDbContext.Platforms.Any(x => x.Id.Equals(platformId));
     }
 
+    public bool PlatformFromPlatformsServiceExits(int externalPlatformId)
+    {
+        return _appDbContext.Platforms.Any(x => x.ExternalPlatformId.Equals(externalPlatformId));
+    }
+
     public IEnumerable<Command> GetCommandsForPlatform(int platformId)
     {
         return _appDbContext.Commands.Where(x => x.PlatformId.Equals(platformId))

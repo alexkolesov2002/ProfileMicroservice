@@ -11,6 +11,8 @@ public interface ICommandRepository
     void CreatePlatform(Platform platform);
 
     bool PlatformExits(int platformId);
+
+    bool PlatformFromPlatformsServiceExits(int externalPlatformId);
     
     //Commands
     IEnumerable<Command> GetCommandsForPlatform(int platformId);
