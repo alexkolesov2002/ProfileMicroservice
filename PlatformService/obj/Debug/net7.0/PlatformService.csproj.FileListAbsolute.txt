@@ -79,3 +79,10 @@ H:\MyMicroservices\PlatformService\obj\Debug\net7.0\PlatformService.genruntimeco
 H:\MyMicroservices\PlatformService\obj\Debug\net7.0\ref\PlatformService.dll
 H:\MyMicroservices\PlatformService\bin\Debug\net7.0\appsettings.Production.json
 H:\MyMicroservices\PlatformService\bin\Debug\net7.0\RabbitMQ.Client.dll
+H:\MyMicroservices\PlatformService\bin\Debug\net7.0\Google.Protobuf.dll
+H:\MyMicroservices\PlatformService\bin\Debug\net7.0\Grpc.AspNetCore.Server.dll
+H:\MyMicroservices\PlatformService\bin\Debug\net7.0\Grpc.AspNetCore.Server.ClientFactory.dll
+H:\MyMicroservices\PlatformService\bin\Debug\net7.0\Grpc.Core.Api.dll
+H:\MyMicroservices\PlatformService\bin\Debug\net7.0\Grpc.Net.Client.dll
+H:\MyMicroservices\PlatformService\bin\Debug\net7.0\Grpc.Net.ClientFactory.dll
+H:\MyMicroservices\PlatformService\bin\Debug\net7.0\Grpc.Net.Common.dll
