@@ -44,3 +44,10 @@ H:\MyMicroservices\CommandsService\obj\Debug\net7.0\CommandsService.genruntimeco
 H:\MyMicroservices\CommandsService\obj\Debug\net7.0\ref\CommandsService.dll
 H:\MyMicroservices\CommandsService\bin\Debug\net7.0\appsettings.Production.json
 H:\MyMicroservices\CommandsService\bin\Debug\net7.0\RabbitMQ.Client.dll
+H:\MyMicroservices\CommandsService\bin\Debug\net7.0\Google.Protobuf.dll
+H:\MyMicroservices\CommandsService\bin\Debug\net7.0\Grpc.AspNetCore.Server.dll
+H:\MyMicroservices\CommandsService\bin\Debug\net7.0\Grpc.AspNetCore.Server.ClientFactory.dll
+H:\MyMicroservices\CommandsService\bin\Debug\net7.0\Grpc.Core.Api.dll
+H:\MyMicroservices\CommandsService\bin\Debug\net7.0\Grpc.Net.Client.dll
+H:\MyMicroservices\CommandsService\bin\Debug\net7.0\Grpc.Net.ClientFactory.dll
+H:\MyMicroservices\CommandsService\bin\Debug\net7.0\Grpc.Net.Common.dll
